@@ -251,7 +251,7 @@
           <div class="name">鄭鴻鈞<span class="nick">馬克</span></div>
           <div class="role">身 體 結 構 平 衡 教 練</div>
           <button class="btn btn-brown" type="button" onclick="openModal('images/intro_card.jpg')">查看背景資訊</button>
-          <a class="btn btn-ink" href="share.html" style="margin-top:12px;">分享</a>
+          <button class="btn btn-ink" type="button" style="margin-top:12px;" onclick="sharePage()">分享</button>
           </div>
           <div class="swipe-hint">滑動查看更多<span class="arrow">→</span></div>
         </section>
@@ -335,6 +335,17 @@
     dots.forEach((d,i)=>d.classList.toggle('active', i===idx));
   });
   function openModal(src){ document.getElementById('modalImg').src = src; document.getElementById('priceModal').classList.add('open'); }
+  function sharePage(){
+    var url = location.href.split('#')[0].split('?')[0];
+    var title = document.title;
+    if (navigator.share) {
+      navigator.share({title:title, url:url}).catch(function(){});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(function(){ alert('連結已複製'); });
+    } else {
+      window.prompt('複製這個連結：', url);
+    }
+  }
   function closeModal(){ document.getElementById('priceModal').classList.remove('open'); }
 </script>
 </body>

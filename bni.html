@@ -274,7 +274,7 @@
             <a class="btn btn-brown" href="tel:0928058314">撥打電話</a>
           </div>
           <div class="bni-callrow">
-            <a class="btn btn-ink" href="share-bni.html">分享</a>
+            <button class="btn btn-ink" type="button" onclick="sharePage()">分享</button>
           </div>
           <div class="swipe-hint">滑動查看更多<span class="arrow">→</span></div>
         </section>
@@ -369,6 +369,17 @@
     dots.forEach((d,i)=>d.classList.toggle('active', i===idx));
   });
   function openModal(src){ document.getElementById('modalImg').src = src; document.getElementById('priceModal').classList.add('open'); }
+  function sharePage(){
+    var url = location.href.split('#')[0].split('?')[0];
+    var title = document.title;
+    if (navigator.share) {
+      navigator.share({title:title, url:url}).catch(function(){});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(function(){ alert('連結已複製'); });
+    } else {
+      window.prompt('複製這個連結：', url);
+    }
+  }
   function closeModal(){ document.getElementById('priceModal').classList.remove('open'); }
 </script>
 </body>
